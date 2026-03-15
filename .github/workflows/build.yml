@@ -16,7 +16,7 @@ permissions:
 jobs:
   # ── 1. 编译 ARM64 VM 解释器 blob ──────────────────────────
   stub:
-    name: VM Stub
+    name: VM Stub (linux/arm64)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -33,9 +33,9 @@ jobs:
             -c -Os -mcmodel=tiny -fno-stack-protector \
             -fno-builtin -nostdlib -march=armv8-a \
             -DVM_INDIRECT_DISPATCH -DVM_FUNC_SPLIT -DVM_TOKEN_ENTRY \
-            stub/vm_interp_clean.c -o build/stub/vm_interp.o
+            stub/linux/arm64/vm_interp.c -o build/stub/vm_interp.o
 
-          aarch64-linux-gnu-ld -T stub/vm_interp.lds \
+          aarch64-linux-gnu-ld -T stub/linux/arm64/vm_interp.lds \
             -o build/stub/vm_interp.elf build/stub/vm_interp.o
 
           aarch64-linux-gnu-objcopy -O binary \
